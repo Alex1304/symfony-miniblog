@@ -1,0 +1,8 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Edit article : {{ article.title }}{% endblock %}
+
+{% block body %}
+	<h2>Edit article #{{ article.id }}</h2>
+	{% include 'article/form.html.twig' with { 'submit_text' : 'Edit Article' } %}
+{% endblock %}

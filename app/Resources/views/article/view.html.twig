@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}View Article: {{ article.title }}{% endblock %}
+
+{% block body %}
+	<h2>{{ article.title }}</h2>
+	<p>{{ article.content }}</p>
+	<hr />
+	<a class="btn btn-secondary" href="{{ path('article_edit', { 'id' : article.id }) }}" role="button">Edit</a>
+	<a class="btn btn-danger" href="{{ path('article_delete', { 'id' : article.id }) }}" role="button">Delete</a>
+{% endblock %}
