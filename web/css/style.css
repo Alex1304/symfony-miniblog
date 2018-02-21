@@ -13,3 +13,8 @@ h1, h2 {
 table {
 	margin-top: 20px;
 }
+
+#homebtn {
+	text-align: center;
+	margin-top: 50px;
+}
