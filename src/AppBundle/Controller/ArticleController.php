@@ -8,6 +8,8 @@ use Symfony\Component\HttpFoundation\Request;
 
 use AppBundle\Entity\Article;
 use AppBundle\Form\ArticleType;
+use AppBundle\Entity\Comment;
+use AppBundle\Form\CommentType;
 
 /**
  * Controller to add/edit/delete Articles
@@ -66,7 +68,34 @@ class ArticleController extends Controller
      */
     public function viewAction(Request $request, Article $article)
     {
-    	return $this->render('article/view.html.twig', [ 'article' => $article ]);
+    	$comment = new Comment();
+
+    	$em = $this->getDoctrine()->getManager();
+    	$form = $this->createForm(CommentType::class, $comment);
+
+    	$form->handleRequest($request);
+
+    	if ($form->isSubmitted() && $form->isValid()) {
+    		if (!$this->get('security.authorization_checker')->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+    			$request->getSession()->getFlashBag()->add('danger', 'Missing permissions');
+            	return $this->redirectToRoute('article_view', [ 'id' => $article->getId() ]);
+    		}
+
+    		$comment->setAuthor($this->getUser());
+    		$article->addComment($comment);
+
+    		$em->persist($comment);
+    		$em->flush();
+
+			$request->getSession()->getFlashBag()->add('success', 'Comment successfully added!');
+        	return $this->redirectToRoute('article_view', [ 'id' => $article->getId() ]);
+    	}
+
+    	return $this->render('article/view.html.twig', [
+    		'article' => $article,
+    		'form' => $form->createView(),
+    		'commentList' => $article->getComments(),
+    	]);
     }
 
     /**

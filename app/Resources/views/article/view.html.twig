@@ -13,4 +13,37 @@
 			<a class="btn btn-danger" href="{{ path('article_delete', { 'id' : article.id }) }}" role="button">Delete</a>
 		</div>
 	</div>
+	
+	<div id="commentSection">
+		<h3>{{ commentList|length }} comment{% if commentList|length > 1 %}s{% endif %}</h3>
+
+		<hr />
+
+		{% if commentList|length == 0 %}
+			<div class="text-center">No results</div>
+		{% endif %}
+
+		{% for comment in commentList %}
+			<div>
+				<div><strong>{{ comment.author.username }}</strong> - {{ comment.postDate|date('d/m/Y H:i:s') }}</div>
+				<p>
+					{{ comment.content }}
+				</p>
+			</div>
+		{% endfor %}
+
+		<hr />
+
+		<h3>Add comment</h3>
+
+		{% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
+			{{ form_start(form) }}
+			{{ form_widget(form) }}
+			<input type="submit" class="btn btn-primary" value="Add Comment" />
+			{{ form_rest(form) }}
+			{{ form_end(form) }}
+		{% else %}
+			<div class="alert alert-warning">You need to be <a href="{{ path('login') }}">logged in</a> to add comments!</div>
+		{% endif %}
+	</div>
 {% endblock %}
