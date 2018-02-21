@@ -108,6 +108,6 @@ class ArticleController extends Controller
 		$em->flush();
 
 		$request->getSession()->getFlashBag()->add('success', 'Article successfully deleted!');
-		return $this->redirectToRoute('article_create');
+		return $this->redirectToRoute('article_list');
     }
 }
