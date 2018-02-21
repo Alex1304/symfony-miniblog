@@ -15,6 +15,23 @@ use AppBundle\Form\ArticleType;
 class ArticleController extends Controller
 {
 	/**
+	 * Lists all articles available in database
+	 *
+     * @Route("/article/list", name="article_list")
+     */
+    public function listAction(Request $request)
+    {	
+    	$em = $this->getDoctrine()->getManager();
+    	$repo = $em->getRepository('AppBundle:Article');
+    	$articleList = $repo->findAll();
+
+        // replace this example code with whatever you need
+        return $this->render('article/list.html.twig', [
+            'articleList' => $articleList,
+        ]);
+    }
+
+	/**
 	 * Creates a new article using a form.
 	 *
      * @Route("/article/create", name="article_create")

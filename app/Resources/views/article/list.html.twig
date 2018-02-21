@@ -1,0 +1,27 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+    <h2>Article List</h2>
+
+    <table class="table table-bordered table-hover">
+        <thead class="thead-dark">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">Title</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if articleList|length == 0 %}
+                <tr><td colspan="2" class="text-center">No results</td></tr>
+            {% endif %}
+
+            {% for article in articleList %}
+                <tr>
+                    <th scope="row">{{ article.id }}</th>
+                    <td><a href="{{ path('article_view', { 'id' : article.id }) }}">{{ article.title }}</a></td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <a class="btn btn-success" href="{{ path('article_create') }}" role="button">Create New Article</a>
+{% endblock %}
