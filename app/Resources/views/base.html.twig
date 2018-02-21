@@ -15,6 +15,13 @@
                 <h1><a href="{{ path('homepage') }}">Symfony Miniblog</a></h1>
                 <hr />
             </header>
+
+            {% block loginbar %}
+                <section class="text-center">
+                    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}Logged in as {{ app.user.username }} - <a href="{{ path('logout') }}">Logout</a>{% else %}<a href="{{ path('login') }}">Login</a> or <a href="{{ path('register') }}">Register</a>{% endif %}
+                </section>
+            {% endblock %}
+
             <section>
                 {% for type, messages in app.session.flashbag.all() %}
                     {% for message in messages %}

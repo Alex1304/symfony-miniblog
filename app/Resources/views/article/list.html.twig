@@ -23,5 +23,10 @@
             {% endfor %}
         </tbody>
     </table>
-    <a class="btn btn-success" href="{{ path('article_create') }}" role="button">Create New Article</a>
+    <div>
+        <a class="btn btn-primary" href="{{ path('homepage') }}" role="button">Back To Home</a>
+        <div class="d-inline-block float-right">
+            <a class="btn btn-success" href="{{ path('article_create') }}" role="button">Create New Article</a>
+        </div>
+    </div>
 {% endblock %}
